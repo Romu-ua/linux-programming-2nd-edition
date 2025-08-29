@@ -1,0 +1,31 @@
+tailコマンドを実装する
+
+テキストファイルの末尾指定行数(デフォルトで10行)を出力する。
+行数だけをオプションで受け取れる様にする。
+
+mallocなどの説明後なのでmallocを使って欲しいのだろう。
+
+単一ファイルのみに対応。
+
+- リンクバッファの動作イメージ
+ファイルに10行ある.n = 6.
+
+buffer = [line1, line2, line3, line4, line5, line6]
+index = 0に戻る
+buffer = [line7, line2, line3, line4, line5, line6]
+...
+buffer = [line7, line8, line9, line10 line5, line6]
+
+出力の時は、startとtotal(バッファが埋まってないことを考慮して)を用いる。
+
+start:
+読み込んだ行(count)がバッファサイズnを超えているときはindex位置。
+そうでなければindexは最初から(0)
+
+total:
+読み込んだ行がバッファサイズを超えている時はcountだけ.
+それ以上の時は、バッファサイズ(n)
+
+上の例ではcountが10なのでstart = 3, total = nになる。
+
+出力するposは(start + i) % nで良い。
